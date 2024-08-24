@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ravencraft Official Website</title>
+    <style>
+        @font-face {
+            font-family: 'RaveFont';
+            src: url('ravefont.ttf') format('truetype');
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'RaveFont', Arial, sans-serif;
+        }
+        
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('background.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .fade-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('ravetek.png');
+            background-size: cover;
+            background-position: center;
+            opacity: 1;
+            transition: opacity 3s ease-in-out;
+            z-index: 1;
+        }
+
+        .fade-out {
+            opacity: 0;
+        }
+
+        .button-container {
+            position: absolute;
+            display: none; /* Initially hidden */
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px; /* Space between buttons */
+        }
+
+        .button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            width: 200px; /* Adjust size as needed */
+            height: 50px; /* Adjust size as needed */
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            font-size: 16px; /* Adjust font size as needed */
+            color: white; /* Adjust text color as needed */
+            font-family: 'RaveFont', Arial, sans-serif;
+            line-height: 50px; /* Center text vertically */
+            background-image: url('button.png'); /* Default button image */
+            transition: background-image 0.3s ease; /* Smooth transition for hover effect */
+        }
+
+        .button:hover {
+            background-image: url('button-hover.png'); /* Image for hover state */
+        }
+
+        .button a {
+            text-decoration: none;
+            color: inherit; /* Inherit the color from the button */
+            display: block;
+            width: 100%;
+            height: 100%;
+            line-height: 50px; /* Center text vertically */
+            font-size: 16px; /* Adjust font size as needed */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="fade-image" id="fadeImage"></div>
+        <div class="button-container" id="buttonContainer">
+            <button class="button">
+                <a href="https://ravetek.github.io/eaglercraft-coming-soon/" target="_blank">Eaglercraft 1.14</a>
+            </button>
+            <button class="button">
+                <a href="https://ravetek.github.io/ravencraft-1.20/" target="_blank">Klockcraft 1.20</a>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            document.getElementById('fadeImage').classList.add('fade-out');
+            document.getElementById('buttonContainer').style.display = 'flex'; // Show button after fade-out
+        }, 3000); // 3000 milliseconds = 3 seconds
+    </script>
+</body>
+</html>
