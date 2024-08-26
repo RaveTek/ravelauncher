@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ravencraft Version Selector</title>
+    <title>RavenLauncher</title>
     <style>
         /* Define the custom font */
         @font-face {
@@ -56,30 +56,20 @@
             position: relative; /* Allow positioning of the text label inside the link */
         }
 
-        .button-container img {
-            cursor: pointer;
-            border: none;
+        /* Button styling for background images */
+        .button {
+            display: block;
             width: 100px; /* Adjust size as needed */
-            height: auto;
-            transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effect */
-            opacity: 0; /* Initially hide buttons */
-            animation: fadeIn 1s ease-out forwards; /* Apply fade-in animation */
-        }
-
-        /* Set default button texture */
-        #zeroThirtyButton,
-        #oneFourteenButton,
-        #oneSevenTenButton,
-        #oneEightOptifineButton {
+            height: 100px; /* Adjust size as needed */
             background-image: url('button.png');
+            background-size: cover; /* Ensure the image covers the button */
+            position: relative; /* Positioning context for text */
+            transition: background-image 0.3s ease; /* Smooth transition for background image change */
         }
 
-        /* Set hover texture */
-        #zeroThirtyButton:hover,
-        #oneFourteenButton:hover,
-        #oneSevenTenButton:hover,
-        #oneEightOptifineButton:hover {
-            content: url('button-hover.png'); /* Change image on hover */
+        /* Button hover state */
+        .button:hover {
+            background-image: url('button-hover.png'); /* Change image on hover */
         }
 
         /* Button text label styling */
@@ -134,21 +124,17 @@
 
     <!-- Container for buttons -->
     <div class="button-container">
-        <a href="https://ravetek.github.io/Ravencraft_0.30/" target="_blank">
-            <img src="button.png" alt="0.30 Button" id="zeroThirtyButton">
+        <a href="https://ravetek.github.io/Ravencraft_0.30/" target="_blank" class="button">
             <div class="button-label">0.30</div>
         </a>
-        <a href="#" id="oneFourteenLink">
-            <img src="button.png" alt="1.14 Button" id="oneFourteenButton">
+        <a href="#" id="oneFourteenLink" class="button">
             <div class="button-label">1.14</div>
         </a>
-        <a href="#" id="oneSevenTenLink">
-            <img src="button.png" alt="1.7.10 Button" id="oneSevenTenButton">
+        <a href="#" id="oneSevenTenLink" class="button">
             <div class="button-label">1.7.10</div>
         </a>
-        <a href="#" id="oneEightOptifineLink">
-            <img src="button.png" alt="1.8 Optifine Button" id="oneEightOptifineButton">
-            <div class="button-label">Optifine</div>
+        <a href="#" id="oneEightOptifineLink" class="button">
+            <div class="button-label">1.8 Optifine</div>
         </a>
     </div>
 
