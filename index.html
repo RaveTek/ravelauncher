@@ -3,111 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ravencraft Official Website</title>
+    <title>Ravencraft Version Selector</title>
     <style>
+        /* Define the custom font */
         @font-face {
-            font-family: 'RaveFont';
-            src: url('ravefont.ttf') format('truetype');
+            font-family: 'CustomFont';
+            src: url('fonts/font.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
         }
 
+        /* Apply the custom font to the entire page */
         body {
+            font-family: 'CustomFont', sans-serif; /* Fallback to sans-serif if custom font fails to load */
             margin: 0;
             padding: 0;
-            overflow: hidden;
-            font-family: 'RaveFont', Arial, sans-serif;
-        }
-        
-        .container {
-            position: relative;
-            width: 100vw;
+            display: flex;
+            flex-direction: column; /* Stack title and button container vertically */
+            justify-content: center;
+            align-items: center;
             height: 100vh;
-            background-image: url('background.png');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
+            background: url('background.png') no-repeat center center fixed; /* Apply background image */
+            background-size: cover; /* Ensure the image covers the entire background */
+            position: relative; /* Ensure positioning context for absolute positioning */
+            overflow: hidden; /* Prevent scrollbars from appearing due to animations */
         }
 
-        .fade-image {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: url('ravetek.png');
-            background-size: cover;
-            background-position: center;
-            opacity: 1;
-            transition: opacity 3s ease-in-out;
-            z-index: 1;
+        /* Style for the title */
+        .title {
+            position: absolute; /* Position in the top corner */
+            top: 10px; /* Adjust distance from the top */
+            left: 10px; /* Adjust distance from the left */
+            font-size: 24px; /* Adjust font size as needed */
+            font-weight: bold; /* Optional: make text bold */
+            color: white; /* Ensure text is visible against the background */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Optional: add a shadow for better readability */
         }
 
-        .fade-out {
-            opacity: 0;
-        }
-
+        /* Container for buttons */
         .button-container {
-            position: absolute;
-            display: none; /* Initially hidden */
-            z-index: 2;
             display: flex;
-            flex-direction: column;
+            flex-direction: column; /* Stack buttons vertically */
             align-items: center;
-            gap: 10px; /* Space between buttons */
+            gap: 15px; /* Space between buttons */
+            animation: slideIn 1s ease-out; /* Apply slide-in animation */
         }
 
-        .button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-size: cover;
-            background-position: center;
-            width: 200px; /* Adjust size as needed */
-            height: 50px; /* Adjust size as needed */
-            border: none;
+        /* Button styling */
+        .button-container a {
+            display: block; /* Make the link a block element to wrap around the button */
+            text-decoration: none; /* Remove underline from links */
+            position: relative; /* Allow positioning of the text label inside the link */
+        }
+
+        .button-container img {
             cursor: pointer;
-            text-align: center;
-            font-size: 16px; /* Adjust font size as needed */
-            color: white; /* Adjust text color as needed */
-            font-family: 'RaveFont', Arial, sans-serif;
-            line-height: 50px; /* Center text vertically */
-            background-image: url('button.png'); /* Default button image */
-            transition: background-image 0.3s ease; /* Smooth transition for hover effect */
+            border: none;
+            width: 100px; /* Adjust size as needed */
+            height: auto;
+            transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effect */
+            opacity: 0; /* Initially hide buttons */
+            animation: fadeIn 1s ease-out forwards; /* Apply fade-in animation */
         }
 
-        .button:hover {
-            background-image: url('button-hover.png'); /* Image for hover state */
+        /* Set default button texture */
+        #zeroThirtyButton,
+        #oneFourteenButton,
+        #oneSevenTenButton,
+        #oneEightOptifineButton {
+            background-image: url('button.png');
         }
 
-        .button a {
-            text-decoration: none;
-            color: inherit; /* Inherit the color from the button */
-            display: block;
-            width: 100%;
-            height: 100%;
-            line-height: 50px; /* Center text vertically */
-            font-size: 16px; /* Adjust font size as needed */
+        /* Set hover texture */
+        #zeroThirtyButton:hover,
+        #oneFourteenButton:hover,
+        #oneSevenTenButton:hover,
+        #oneEightOptifineButton:hover {
+            content: url('hover.png'); /* Change image on hover */
+        }
+
+        /* Button text label styling */
+        .button-label {
+            position: absolute; /* Position text on top of the button */
+            bottom: 10px; /* Distance from the bottom of the button */
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Adjust horizontal position */
+            font-size: 14px; /* Adjust font size as needed */
+            color: white; /* Ensure text is visible against the background */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Optional: add a shadow for better readability */
+            font-family: 'CustomFont', sans-serif; /* Apply custom font */
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px); /* Start from slightly above */
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0); /* End at the original position */
+            }
+        }
+
+        /* Slide-in animation for button container */
+        @keyframes slideIn {
+            from {
+                transform: translateY(-100px); /* Start from above the viewport */
+            }
+            to {
+                transform: translateY(0); /* End at the original position */
+            }
+        }
+
+        /* Error message styling */
+        .error-message {
+            position: fixed;
+            bottom: 20px; /* Distance from the bottom of the viewport */
+            font-size: 18px; /* Adjust font size as needed */
+            color: red; /* Red color for error message */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Optional: add a shadow for better readability */
+            display: none; /* Initially hidden */
+            font-family: 'CustomFont', sans-serif; /* Apply custom font */
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="fade-image" id="fadeImage"></div>
-        <div class="button-container" id="buttonContainer">
-            <button class="button">
-                <a href="https://ravetek.github.io/eaglercraft-coming-soon/" target="_blank">Eaglercraft 1.14</a>
-            </button>
-            <button class="button">
-                <a href="https://ravetek.github.io/klockcraft-1.9.3/" target="_blank">Klockcraft 1.9.3</a>
-            </button>
-        </div>
+    <!-- Title in the top corner -->
+    <div class="title">Minceraft Version Selector</div>
+
+    <!-- Container for buttons -->
+    <div class="button-container">
+        <a href="https://ravetek.github.io/Ravencraft_0.30/" target="_blank">
+            <img src="button.png" alt="0.30 Button" id="zeroThirtyButton">
+            <div class="button-label">0.30</div>
+        </a>
+        <a href="#" id="oneFourteenLink">
+            <img src="button.png" alt="1.14 Button" id="oneFourteenButton">
+            <div class="button-label">1.14</div>
+        </a>
+        <a href="#" id="oneSevenTenLink">
+            <img src="button.png" alt="1.7.10 Button" id="oneSevenTenButton">
+            <div class="button-label">1.7.10</div>
+        </a>
+        <a href="#" id="oneEightOptifineLink">
+            <img src="button.png" alt="1.8 Optifine Button" id="oneEightOptifineButton">
+            <div class="button-label">Optifine 1.8</div>
+        </a>
+    </div>
+
+    <!-- Error message -->
+    <div class="error-message" id="error-message">
+        Version not available yet!
     </div>
 
     <script>
-        setTimeout(() => {
-            document.getElementById('fadeImage').classList.add('fade-out');
-            document.getElementById('buttonContainer').style.display = 'flex'; // Show button after fade-out
-        }, 3000); // 3000 milliseconds = 3 seconds
+        // Function to show error message
+        function showError() {
+            var errorMessage = document.getElementById('error-message');
+            errorMessage.style.display = 'block'; // Show the error message
+            setTimeout(function() {
+                errorMessage.style.display = 'none'; // Hide the message after 5 seconds
+            }, 5000);
+        }
+
+        // Handle clicks for specific buttons
+        document.getElementById('oneFourteenLink').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            showError(); // Show the error message
+        });
+
+        document.getElementById('oneSevenTenLink').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            showError(); // Show the error message
+        });
+
+        document.getElementById('oneEightOptifineLink').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            showError(); // Show the error message
+        });
     </script>
 </body>
 </html>
